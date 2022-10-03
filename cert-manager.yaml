@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: selfsigned-issuer
+  namespace: istio-ingress
+spec:
+  selfSigned: {}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: app-cert
+  namespace: istio-ingress
+spec:
+  secretName: tls-secret
+  dnsNames:
+  - "*.ns1.svc.cluster.local"
+  - "*.ns1"
+  issuerRef:
+    name: selfsigned-issuer
